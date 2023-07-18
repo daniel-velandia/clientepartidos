@@ -1,0 +1,15 @@
+.mi-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mi-badge-marcador {
+  background-color: rgb(66, 61, 61);
+  margin: auto 8px;
+}
+
+@media (max-width: 320px) {
+  .react-confirm-alert, .react-confirm-alert-body{
+    width: 300px !important;
+  }
+}
