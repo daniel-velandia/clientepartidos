@@ -4,6 +4,7 @@ import axios from 'axios';
 import {SIGNUP_POST_ENDPOINT} from '../connections/helpers/endpoints';
 import {Alert, Card, Col, Container, Row} from 'react-bootstrap';
 import {SignupFormulario} from '../components/SignupFormulario';
+import {isObjetoVacio} from "../connections/helpers/isObjetoVacio";
 import validator from 'validator';
 
 const Signup = () => {
@@ -21,15 +22,20 @@ const Signup = () => {
         }
         
         if(!validator.isEmail(email)) {
-            errores.email = 'El correo electronico es invalido';
+            error.email = 'El correo electronico es invalido';
         }
 
         if(validator.isEmpty(username)) {
-            errores.username = 'El usuario no puede estar vacio';
+            error.username = 'El usuario no puede estar vacio';
         }
         
         if(!validator.isLength(password, {min: 8, max: 30})) {
-            errores.password = 'La contraseña Debe tener entre 8 y 30 caracteres';
+            error.password = 'La contraseña Debe tener entre 8 y 30 caracteres';
+        }
+
+        if(!isObjetoVacio(error)) {
+            setErrores(error);
+            return;
         }
 
         axios.post(SIGNUP_POST_ENDPOINT, {username, password, nombre, email},

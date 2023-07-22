@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {SigninFormulario} from '../components/SigninFormulario';
 import {autenticacion} from '../connections/usuarioAcciones';
+import {isObjetoVacio} from "../connections/helpers/isObjetoVacio";
 import validator from "validator";
 
 function Signin() {
@@ -25,11 +26,16 @@ function Signin() {
         setErrores(error);
 
         if(validator.isEmpty(username)) {
-            errores.username = 'El usuario no puede estar vacio';
+            error.username = 'El usuario no puede estar vacio';
         }
         
         if(validator.isEmpty(password)) {
-            errores.password = 'La contraseña no puede estar vacia';
+            error.password = 'La contraseña no puede estar vacia';
+        }
+
+        if(!isObjetoVacio(error)) {
+            setErrores(error);
+            return;
         }
 
         enviarAccion(autenticacion({username, password}))

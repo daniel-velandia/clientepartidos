@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {CREARPARTIDO_POST_ENDPOINT} from '../connections/helpers/endpoints';
 import {CrearPartidoFormulario} from "../components/CrearPartidoFormulario";
+import {isObjetoVacio} from "../connections/helpers/isObjetoVacio";
 import validator from "validator";
 
 function CrearPartido() {
@@ -17,15 +18,20 @@ function CrearPartido() {
         setErrores(error);
 
         if(!validator.isDate(fecha)) {
-            errores.fecha = 'Fecha invalida';
+            error.fecha = 'Fecha invalida';
         }
         
         if(validator.isEmpty(equipoLocal)) {
-            errores.equipoLocal = 'El nombre del equipo local no puede estar vacio';
+            error.equipoLocal = 'El nombre del equipo local no puede estar vacio';
         }
         
         if(validator.isEmpty(equipoVisitante)) {
-            errores.equipoVisitante = 'El nombre del equipo visitante no puede estar vacio';
+            error.equipoVisitante = 'El nombre del equipo visitante no puede estar vacio';
+        }
+
+        if(!isObjetoVacio(error)) {
+            setErrores(error);
+            return;
         }
 
         axios.post(CREARPARTIDO_POST_ENDPOINT, {fecha, equipoLocal, equipoVisitante})

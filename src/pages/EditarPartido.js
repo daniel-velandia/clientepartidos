@@ -30,15 +30,15 @@ function EditarPartido() {
         setErrores(error);
 
         if(validator.isEmpty(golesLocal)) {
-            errores.golesLocal = 'Los goles del equipo local no pueden estar vacios';
+            error.golesLocal = 'Los goles del equipo local no pueden estar vacios';
         }
         
         if(validator.isEmpty(golesVisitante)) {
-            errores.golesVisitante = 'Los goles del equipo visitante no pueden estar vacios';
+            error.golesVisitante = 'Los goles del equipo visitante no pueden estar vacios';
         }
 
-        if(!isObjetoVacio(errores)) {
-            setErrores(errores);
+        if(!isObjetoVacio(error)) {
+            setErrores(error);
             return;
         }
 
